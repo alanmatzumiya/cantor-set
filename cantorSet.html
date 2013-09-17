@@ -1,54 +1,8 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<title></title>
-	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-	
-</head>
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Zoom + Pan</title>
+<script src="http://d3js.org/d3.v2.min.js"></script>
 <body>
-	<script>
-
-   var svg = d3.select("body").append("svg");
-
-   var height = 500;
-   var width  = 700; 
-   var margin = {"left":0, "right":0 ,"top":10, "bottom":0}
-   var xScale = d3.scale.linear().domain([0, 1000]).range([margin.left,width]);
-   var yScale = d3.scale.linear().domain([0,600]).range([height, margin.top]);
-   var lineGenerator = d3.svg.line()
-                        .x(function(d){return d.x;})
-                        .y(function(d){return d.y;})
-                        .interpolate("linear");
-
-   function cantorSet(level, left, right,height)
-   {
-
-      var coordinates = [{"x":xScale(left),  "y":10 * height},
-                         {"x":xScale(right), "y":10 * height}];
-      
-      var line = svg.append("path")
-                     .attr(
-                        {
-                           "d":lineGenerator(coordinates),
-                           "stroke":"black",
-                           "stroke-width":3,
-                           "fill":"none",
-                           "shape-rendering":"crispEdges"
-                        });
-
-      var length = 1/3 * Math.abs(left-right)      
-
-      if (level != 0)
-      {
-         // Draw the left hand side of the level
-         cantorSet(level - 1, left, left + length, height + 1);
-         // Draw the right hand side of the level
-         cantorSet(level - 1, right - length, right, height + 1)   
-      }
-   }
-
-   cantorSet(11,0,700,0);
-
-	</script>
+<script src="render.js"></script>
 </body>
 </html>
